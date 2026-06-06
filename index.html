@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS — The Future, Refined</title>
+    <title>Akshat Rakesh Trading Academy - Master Trading Like a Professional</title>
     <style>
         :root {
-            --bg: #030609;
-            --surface: #0a1117;
-            --surface-raised: #111a22;
-            --text-primary: #e8edf2;
-            --text-secondary: #7a8a9a;
-            --accent: #00d4ff;
-            --accent-secondary: #7b5cff;
-            --accent-glow: rgba(0, 212, 255, 0.2);
-            --accent-glow-strong: rgba(0, 212, 255, 0.4);
-            --border: rgba(255, 255, 255, 0.05);
-            --border-hover: rgba(255, 255, 255, 0.12);
-            --radius: 20px;
-            --radius-sm: 12px;
-            --transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            --bg: #050816;
+            --surface: rgba(255, 255, 255, 0.03);
+            --card: rgba(255, 255, 255, 0.05);
+            --accent: #00E5FF;
+            --secondary: #7C4DFF;
+            --success: #00FF88;
+            --warning: #FFD54F;
+            --danger: #FF5252;
+            --text: #FFFFFF;
+            --subtext: #B0B7C3;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -29,17 +29,15 @@
         }
 
         body {
-            font-family: 'SF Pro Display', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-primary);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
         }
 
-        /* Animated grid background */
-        .bg-grid {
+        /* Particles */
+        .particles {
             position: fixed;
             top: 0;
             left: 0;
@@ -47,759 +45,995 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.03;
-            background-image:
-                linear-gradient(rgba(0, 212, 255, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.3) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 70%);
+        }
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
             position: relative;
             z-index: 1;
         }
 
-        /* ─── Navigation ─────────────────────── */
-        nav {
+        /* Nav */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 8, 22, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+        }
+        .nav-inner {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            padding: 24px 0;
-            position: relative;
-            z-index: 100;
+            gap: 16px;
         }
-
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-transform: uppercase;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: #fff;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 36px;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            transition: all var(--transition);
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            background: transparent !important;
-            border: 1px solid var(--accent) !important;
-            color: var(--accent) !important;
-            padding: 10px 22px !important;
-            border-radius: 100px !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.5px !important;
-            transition: all var(--transition) !important;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .nav-cta:hover {
-            background: var(--accent) !important;
-            color: #000 !important;
-            box-shadow: 0 0 40px var(--accent-glow-strong) !important;
-            transform: translateY(-2px);
-        }
-        .nav-cta::after {
-            display: none !important;
-        }
-
-        /* ─── Hero ──────────────────────────── */
-        .hero {
-            padding: 100px 0 80px;
-            position: relative;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 212, 255, 0.05);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            padding: 8px 18px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            color: var(--accent);
-            margin-bottom: 32px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .hero-badge-pulse {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent);
-            animation: pulse-dot 2s ease-in-out infinite;
-            box-shadow: 0 0 10px var(--accent);
-        }
-
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.8);
-            }
-            50% {
-                box-shadow: 0 0 0 12px rgba(0, 212, 255, 0);
-            }
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 5.5vw, 4.5rem);
+            font-size: 1.2rem;
             font-weight: 800;
-            letter-spacing: -1.5px;
-            line-height: 1.05;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.8s ease-out 0.1s both;
-        }
-
-        .hero h1 .gradient-text {
-            background: linear-gradient(135deg, var(--accent), #fff 50%, var(--accent-secondary));
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            white-space: nowrap;
+        }
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .nav-links a {
+            color: var(--subtext);
+            text-decoration: none;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+            background: rgba(0, 229, 255, 0.1);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
         }
 
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 30%, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .hero p {
             font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 480px;
-            line-height: 1.7;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
+            color: var(--subtext);
+            max-width: 700px;
+            margin: 0 auto 32px;
         }
-
-        .hero-buttons {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.3s both;
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 100px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
         }
-
         .btn-primary {
             background: var(--accent);
             color: #000;
-            padding: 14px 32px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            transition: all var(--transition);
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 0 30px var(--accent-glow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
         }
         .btn-primary:hover {
-            box-shadow: 0 0 50px var(--accent-glow-strong);
+            box-shadow: 0 0 50px rgba(0, 229, 255, 0.5);
             transform: translateY(-2px);
         }
-
-        .btn-secondary {
+        .btn-outline {
+            border: 1px solid var(--accent);
+            color: var(--accent);
             background: transparent;
-            color: var(--text-primary);
-            padding: 14px 32px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+        }
+        .btn-outline:hover {
+            background: rgba(0, 229, 255, 0.1);
+        }
+        .hero-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .stat-card {
+            background: var(--card);
             border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: var(--subtext);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        /* Section */
+        .section {
+            padding: 60px 0;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .section-sub {
+            color: var(--subtext);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
             transition: all var(--transition);
             cursor: pointer;
             backdrop-filter: blur(10px);
         }
-
-        .btn-secondary:hover {
-            border-color: var(--border-hover);
-            background: rgba(255, 255, 255, 0.03);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 229, 255, 0.1);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+        .feature-card h3 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+        .feature-card p {
+            color: var(--subtext);
+            font-size: 0.8rem;
         }
 
-        /* Hero Visual - Holographic Orb */
-        .hero-visual {
-            position: relative;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .holo-orb {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.15), rgba(123, 92, 255, 0.08) 40%, transparent 70%);
-            position: relative;
-            box-shadow:
-                0 0 60px var(--accent-glow),
-                inset 0 0 60px rgba(0, 212, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .holo-orb::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            animation: spin 20s linear infinite;
-        }
-
-        .holo-orb::after {
-            content: '';
-            position: absolute;
-            top: 50px;
-            left: 50px;
-            right: 50px;
-            bottom: 50px;
-            border-radius: 50%;
-            border: 1px dashed rgba(0, 212, 255, 0.15);
-            animation: spin 30s linear infinite reverse;
-        }
-
-        .holo-core {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.8), transparent 70%);
-            box-shadow: 0 0 40px var(--accent-glow-strong);
-            animation: pulse-core 2s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        @keyframes pulse-core {
-            0%,
-            100% {
-                box-shadow: 0 0 30px var(--accent-glow);
-            }
-            50% {
-                box-shadow: 0 0 60px var(--accent-glow-strong);
-            }
-        }
-
-        /* Floating particles */
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: particle-float 4s ease-in-out infinite;
-            opacity: 0.6;
-        }
-        .particle:nth-child(1) {
-            top: 10%;
-            left: 20%;
-            animation-delay: 0s;
-        }
-        .particle:nth-child(2) {
-            top: 30%;
-            right: 15%;
-            animation-delay: 1s;
-        }
-        .particle:nth-child(3) {
-            bottom: 20%;
-            left: 25%;
-            animation-delay: 2s;
-        }
-        .particle:nth-child(4) {
-            bottom: 30%;
-            right: 20%;
-            animation-delay: 3s;
-        }
-
-        @keyframes particle-float {
-            0%,
-            100% {
-                transform: translateY(0) scale(1);
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateY(-15px) scale(1.5);
-                opacity: 1;
-            }
-        }
-
-        /* ─── Features ─────────────────────── */
-        .features {
-            padding: 80px 0 100px;
-        }
-
-        .section-label {
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 0.7rem;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-        }
-
-        .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            margin-bottom: 56px;
-            max-width: 500px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .feature-card {
-            background: var(--surface);
+        /* Cards */
+        .card {
+            background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 36px 28px;
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
+            padding: 24px;
             backdrop-filter: blur(10px);
+            margin-bottom: 16px;
+        }
+        .card-header {
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
         }
 
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.03), transparent 60%);
-            opacity: 0;
-            transition: opacity var(--transition);
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
-
-        .feature-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-6px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.05);
-        }
-        .feature-card:hover::after {
-            opacity: 1;
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(0, 212, 255, 0.06);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 14px;
+        .price-item {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            font-size: 1.3rem;
-            color: var(--accent);
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .price-up {
+            color: var(--success);
+        }
+        .price-down {
+            color: var(--danger);
+        }
+
+        /* Forms */
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            color: var(--subtext);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .pricing-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
             transition: all var(--transition);
         }
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.2);
+            transform: scale(1.03);
+        }
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 12px 0;
+        }
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0;
+        }
+        .pricing-card li {
+            padding: 6px 0;
+            color: var(--subtext);
+            font-size: 0.85rem;
+        }
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
 
-        .feature-card:hover .feature-icon {
-            box-shadow: 0 0 25px var(--accent-glow);
+        /* Chat */
+        .chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+        }
+        .chat-msg {
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            max-width: 85%;
+            font-size: 0.85rem;
+        }
+        .chat-user {
+            background: rgba(0, 229, 255, 0.15);
+            margin-left: auto;
+        }
+        .chat-bot {
+            background: var(--card);
+            margin-right: auto;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--subtext);
+            transition: all var(--transition);
+        }
+        .tab.active {
+            background: var(--accent);
+            color: #000;
             border-color: var(--accent);
         }
 
-        .feature-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.3px;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .feature-index {
-            position: absolute;
-            top: 20px;
-            right: 24px;
-            font-size: 3rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.02);
-            letter-spacing: -2px;
-            pointer-events: none;
-            transition: all var(--transition);
-        }
-        .feature-card:hover .feature-index {
-            color: rgba(0, 212, 255, 0.06);
-        }
-
-        /* ─── Stats Strip ──────────────────── */
-        .stats-strip {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 40px 0 80px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 80px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 20px;
-        }
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, var(--accent), #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .stat-label {
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.7rem;
-            margin-top: 8px;
-        }
-
-        /* ─── CTA ──────────────────────────── */
-        .cta-section {
-            padding: 60px 0 100px;
-        }
-
-        .cta-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 64px 48px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-card::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-            pointer-events: none;
-        }
-
-        .cta-card h2 {
-            font-size: 2.4rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-card h2 .gradient-text {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .cta-card p {
-            color: var(--text-secondary);
-            margin-bottom: 36px;
-            position: relative;
-            z-index: 1;
-            font-size: 1.1rem;
-        }
-
-        /* ─── Footer ───────────────────────── */
+        /* Footer */
         footer {
             border-top: 1px solid var(--border);
-            padding: 32px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-secondary);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--subtext);
             font-size: 0.8rem;
-            letter-spacing: 0.5px;
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
         }
 
-        /* ─── Animations ──────────────────── */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Hidden admin */
+        .hidden {
+            display: none;
         }
 
-        /* ─── Responsive ──────────────────── */
-        @media (max-width: 900px) {
-            .hero-grid {
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal {
+            background: #0a0f1e;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(5, 8, 22, 0.95);
+                padding: 16px;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .dashboard-grid {
                 grid-template-columns: 1fr;
-                gap: 40px;
             }
-            .hero-visual {
-                order: -1;
+            .pricing-grid {
+                grid-template-columns: 1fr;
             }
-            .holo-orb {
-                width: 220px;
-                height: 220px;
+            .pricing-card.featured {
+                transform: none;
             }
-            .features-grid {
+        }
+        @media (max-width: 480px) {
+            .stats {
                 grid-template-columns: 1fr 1fr;
             }
-            .stats-strip {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 0 16px;
-            }
-            .nav-links a:not(.nav-cta) {
-                display: none;
-            }
-            .features-grid {
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
             .hero h1 {
-                font-size: 2.2rem;
-            }
-            .hero-buttons {
-                flex-direction: column;
-            }
-            .cta-card {
-                padding: 40px 20px;
-            }
-            .cta-card h2 {
-                font-size: 1.6rem;
-            }
-            footer {
-                flex-direction: column;
-                gap: 12px;
-               text-align: center;
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Animated Grid Background -->
-    <div class="bg-grid"></div>
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
 
-    <div class="container">
-        <!-- Navigation -->
-        <nav>
-            <a href="#" class="logo">
-                <div class="logo-icon">◆</div> Nexus
-            </a>
-            <ul class="nav-links">
-                <li><a href="#">Platform</a></li>
-                <li><a href="#">Solutions</a></li>
-                <li><a href="#">Docs</a></li>
-                <li><a href="#" class="nav-cta">Access</a></li>
-            </ul>
-        </nav>
-
-        <!-- Hero -->
-        <section class="hero">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <span class="hero-badge-pulse"></span> V3.2 Now Live
-                    </div>
-                    <h1>The future isn't coming — <span class="gradient-text">it's already here.</span></h1>
-                    <p>Nexus redefines what's possible with next-gen infrastructure, seamless intelligence, and an interface that feels like tomorrow.</p>
-                    <div class="hero-buttons">
-                        <a href="#" class="btn-primary">Get Early Access</a>
-                        <a href="#" class="btn-secondary">Explore Docs</a>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="holo-orb">
-                        <div class="holo-core"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats -->
-        <div class="stats-strip">
-            <div class="stat-item">
-                <div class="stat-number">99.9%</div>
-                <div class="stat-label">Uptime Guaranteed</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">10ms</div>
-                <div class="stat-label">Global Latency</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">∞</div>
-                <div class="stat-label">Scale Limit</div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-inner">
+            <span class="logo">⚡ ARTA</span>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="active" onclick="navigate('home')">Home</a>
+                <a href="#simulator" onclick="navigate('simulator')">Simulator</a>
+                <a href="#journal" onclick="navigate('journal')">Journal</a>
+                <a href="#market" onclick="navigate('market')">Market</a>
+                <a href="#academy" onclick="navigate('academy')">Academy</a>
+                <a href="#ai" onclick="navigate('ai')">AI Mentor</a>
+                <a href="#plans" onclick="navigate('plans')">Plans</a>
+                <a href="#admin" onclick="navigate('admin')" style="opacity:0.4">⚙</a>
             </div>
         </div>
+    </nav>
 
-        <!-- Features -->
-        <section class="features">
-            <div class="section-label">Core Capabilities</div>
-            <h2 class="section-title">Built for the next<br>era of digital.</h2>
-            <p class="section-subtitle">Infrastructure that anticipates. Interfaces that inspire.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-index">01</div>
-                    <div class="feature-icon">◈</div>
-                    <h3>Neural Processing</h3>
-                    <p>Adaptive intelligence that learns your patterns and optimizes in real-time, anticipating needs before they arise.</p>
+    <!-- Main Content -->
+    <div class="container" id="mainContent">
+        <!-- Default: Home -->
+        <div id="page-home">
+            <!-- Hero -->
+            <section class="hero">
+                <h1>Master Trading Like a Professional</h1>
+                <p>Learn, Practice, Analyze and Grow with India's Most Advanced Trading Learning Ecosystem.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-primary" onclick="navigate('academy')">Start Learning</button>
+                    <button class="btn btn-outline" onclick="navigate('plans')">View Plans</button>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-index">02</div>
-                    <div class="feature-icon">⬡</div>
-                    <h3>Quantum Mesh</h3>
-                    <p>Decentralized architecture with zero single points of failure. Your data flows through the most efficient paths.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-index">03</div>
-                    <div class="feature-icon">◎</div>
-                    <h3>Holo Interface</h3>
-                    <p>Spatial computing meets intuitive design. An interface that disappears, leaving only the experience.</p>
-                </div>
+            </section>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-card"><div class="stat-number" id="countStudents">50,000+</div><div class="stat-label">Students</div></div>
+                <div class="stat-card"><div class="stat-number">5,000+</div><div class="stat-label">Lessons</div></div>
+                <div class="stat-card"><div class="stat-number">1M+</div><div class="stat-label">Trades Analyzed</div></div>
+                <div class="stat-card"><div class="stat-number">98%</div><div class="stat-label">Satisfaction</div></div>
             </div>
-        </section>
 
-        <!-- CTA -->
-        <section class="cta-section">
-            <div class="cta-card">
-                <h2>Ready to step into<br><span class="gradient-text">what's next?</span></h2>
-                <p>Join the pioneers building on Nexus. Early access is limited.</p>
-                <a href="#" class="btn-primary">Reserve Your Spot</a>
-            </div>
-        </section>
+            <!-- Features -->
+            <section class="section">
+                <h2 class="section-title">Everything You Need</h2>
+                <p class="section-sub">A complete ecosystem for traders at every level</p>
+                <div class="feature-grid" id="featureGrid"></div>
+            </section>
+        </div>
 
-        <!-- Footer -->
-        <footer>
-            <span>© 2026 Nexus Corp. All rights reserved.</span>
-            <span>Privacy &nbsp;·&nbsp; Terms &nbsp;·&nbsp; Contact</span>
-        </footer>
+        <!-- Simulator Page -->
+        <div id="page-simulator" class="hidden">
+            <section class="section">
+                <h2 class="section-title">Paper Trading Simulator</h2>
+                <p class="section-sub">Virtual Balance: <strong style="color:var(--accent)">₹<span id="simBalance">10,00,000</span></strong></p>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-header">Place Trade</div>
+                        <select id="simAsset"><option>NIFTY</option><option>BANKNIFTY</option><option>RELIANCE</option><option>TCS</option><option>INFY</option><option>BTC</option><option>ETH</option></select>
+                        <input type="number" id="simQty" placeholder="Quantity" value="1">
+                        <input type="number" id="simPrice" placeholder="Price" value="1000">
+                        <div style="display:flex;gap:8px">
+                            <button class="btn btn-primary" onclick="simTrade('buy')" style="flex:1">Buy</button>
+                            <button class="btn" style="flex:1;background:var(--danger)" onclick="simTrade('sell')">Sell</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Portfolio Value</div>
+                        <div style="font-size:2rem;font-weight:800;color:var(--success)" id="simPortValue">₹10,00,000</div>
+                        <div style="color:var(--subtext)">P&L: <span id="simPnL">₹0</span></div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:16px">
+                    <div class="card-header">Open Positions</div>
+                    <table><thead><tr><th>Asset</th><th>Qty</th><th>Price</th><th>Type</th><th>P&L</th><th>Action</th></tr></thead><tbody id="simPositions"></tbody></table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Journal Page -->
+        <div id="page-journal" class="hidden">
+            <section class="section">
+                <h2 class="section-title">Trading Journal</h2>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-header">Add Trade</div>
+                        <input id="jAsset" placeholder="Asset (e.g., NIFTY)">
+                        <input type="number" id="jEntry" placeholder="Entry Price">
+                        <input type="number" id="jExit" placeholder="Exit Price">
+                        <input type="number" id="jQty" placeholder="Quantity">
+                        <textarea id="jNotes" placeholder="Notes..."></textarea>
+                        <button class="btn btn-primary" onclick="addJournalTrade()" style="width:100%">Save Trade</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Stats</div>
+                        <div>Win Rate: <strong id="jWinRate">0%</strong></div>
+                        <div>Total Trades: <strong id="jTotal">0</strong></div>
+                        <div>Avg Profit: <strong id="jAvgProfit">₹0</strong></div>
+                        <div>Avg Loss: <strong id="jAvgLoss">₹0</strong></div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:16px">
+                    <div class="card-header">Trade History</div>
+                    <table><thead><tr><th>Asset</th><th>Entry</th><th>Exit</th><th>Qty</th><th>P&L</th><th>Notes</th></tr></thead><tbody id="jHistory"></tbody></table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Market Page -->
+        <div id="page-market" class="hidden">
+            <section class="section">
+                <h2 class="section-title">Market Dashboard</h2>
+                <div class="dashboard-grid" id="marketPrices"></div>
+            </section>
+        </div>
+
+        <!-- Academy Page -->
+        <div id="page-academy" class="hidden">
+            <section class="section">
+                <h2 class="section-title">Learning Academy</h2>
+                <div class="tabs" id="academyTabs">
+                    <span class="tab active" onclick="filterAcademy('all')">All</span>
+                    <span class="tab" onclick="filterAcademy('beginner')">Beginner</span>
+                    <span class="tab" onclick="filterAcademy('intermediate')">Intermediate</span>
+                    <span class="tab" onclick="filterAcademy('advanced')">Advanced</span>
+                </div>
+                <div class="feature-grid" id="academyModules"></div>
+            </section>
+        </div>
+
+        <!-- AI Mentor Page -->
+        <div id="page-ai" class="hidden">
+            <section class="section">
+                <h2 class="section-title">AI Trading Mentor</h2>
+                <div class="card">
+                    <div class="chat-container" id="chatContainer"></div>
+                    <div style="display:flex;gap:8px">
+                        <input id="chatInput" placeholder="Ask anything about trading..." onkeypress="if(event.key==='Enter')sendChat()">
+                        <button class="btn btn-primary" onclick="sendChat()">Send</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Plans Page -->
+        <div id="page-plans" class="hidden">
+            <section class="section">
+                <h2 class="section-title">Subscription Plans</h2>
+                <div class="pricing-grid" id="pricingGrid"></div>
+            </section>
+        </div>
+
+        <!-- Admin Page -->
+        <div id="page-admin" class="hidden">
+            <section class="section">
+                <h2 class="section-title">Admin Panel</h2>
+                <div id="adminLogin">
+                    <input id="adminPass" type="password" placeholder="Admin Password">
+                    <button class="btn btn-primary" onclick="adminLogin()">Login</button>
+                </div>
+                <div id="adminPanel" class="hidden">
+                    <div class="card"><div class="card-header">Edit Stats</div><input id="editStudents" placeholder="Students count"><button class="btn btn-primary" onclick="saveAdmin()">Save</button></div>
+                </div>
+            </section>
+        </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <p><strong>Akshat Rakesh Trading Academy</strong></p>
+        <p>Learn. Practice. Analyze. Grow.</p>
+        <p style="margin-top:8px">© 2026 Akshat Rakesh Trading Academy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // ============ NAVIGATION ============
+        function navigate(page) {
+            document.querySelectorAll('[id^="page-"]').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.remove('hidden');
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            const link = document.querySelector(`.nav-links a[href="#${page}"]`);
+            if (link) link.classList.add('active');
+            document.getElementById('navLinks').classList.remove('open');
+            if (page === 'market') updateMarketPrices();
+            if (page === 'ai') loadChatHistory();
+            if (page === 'simulator') renderSimulator();
+            if (page === 'journal') renderJournal();
+        }
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        // ============ PARTICLES ============
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.width = Math.random() * 3 + 1 + 'px';
+                p.style.height = p.style.width;
+                p.style.animationDuration = Math.random() * 10 + 8 + 's';
+                p.style.animationDelay = Math.random() * 10 + 's';
+                container.appendChild(p);
+            }
+        }
+
+        // ============ FEATURES ============
+        const features = [
+            { icon: '🤖', title: 'AI Trading Mentor', desc: '24/7 AI-powered trading guidance and analysis' },
+            { icon: '📊', title: 'Paper Trading Simulator', desc: 'Practice with ₹10L virtual capital risk-free' },
+            { icon: '📚', title: 'Trading Academy', desc: 'Structured courses from beginner to advanced' },
+            { icon: '📝', title: 'Trading Journal', desc: 'Track and analyze every trade for improvement' },
+            { icon: '🔍', title: 'Market Scanner', desc: 'Real-time market screening and alerts' },
+            { icon: '📅', title: 'Economic Calendar', desc: 'Stay ahead of market-moving events' },
+            { icon: '📈', title: 'AI Chart Analyzer', desc: 'Pattern recognition and trend prediction' },
+            { icon: '💼', title: 'Portfolio Tracker', desc: 'Monitor your entire investment portfolio' },
+            { icon: '⚖️', title: 'Risk Calculator', desc: 'Position sizing and risk management tools' },
+            { icon: '🧠', title: 'Strategy Builder', desc: 'Create and backtest trading strategies' },
+            { icon: '👥', title: 'Community Hub', desc: 'Connect with fellow traders and mentors' },
+            { icon: '🏆', title: 'Certifications', desc: 'Earn recognized trading certifications' },
+        ];
+
+        function renderFeatures() {
+            const grid = document.getElementById('featureGrid');
+            grid.innerHTML = features.map(f => `
+            <div class="feature-card">
+              <div class="feature-icon">${f.icon}</div>
+              <h3>${f.title}</h3>
+              <p>${f.desc}</p>
+            </div>`).join('');
+        }
+
+        // ============ SIMULATOR ============
+        let simData = JSON.parse(localStorage.getItem('simData') || '{"balance":1000000,"positions":[]}');
+
+        function simTrade(type) {
+            const asset = document.getElementById('simAsset').value;
+            const qty = parseInt(document.getElementById('simQty').value) || 1;
+            const price = parseFloat(document.getElementById('simPrice').value) || 1000;
+            const cost = qty * price;
+            if (type === 'buy' && cost > simData.balance) return alert('Insufficient balance!');
+            if (type === 'buy') {
+                simData.balance -= cost;
+                simData.positions.push({ asset, qty, price, type: 'buy', id: Date.now() });
+            } else {
+                simData.balance += cost;
+                simData.positions.push({ asset, qty, price, type: 'sell', id: Date.now() });
+            }
+            saveSimData();
+            renderSimulator();
+        }
+
+        function closePosition(id) {
+            const pos = simData.positions.find(p => p.id === id);
+            if (!pos) return;
+            const currentPrice = getMockPrice(pos.asset);
+            const pnl = pos.type === 'buy' ? (currentPrice - pos.price) * pos.qty : (pos.price - currentPrice) *
+                pos.qty;
+            simData.balance += (pos.price * pos.qty) + pnl;
+            simData.positions = simData.positions.filter(p => p.id !== id);
+            saveSimData();
+            renderSimulator();
+        }
+
+        function getMockPrice(asset) {
+            const prices = { NIFTY: 22500, BANKNIFTY: 48500, RELIANCE: 2850, TCS: 3950, INFY: 1550, BTC: 6200000, ETH: 320000 };
+            return prices[asset] + (Math.random() - 0.5) * 200;
+        }
+
+        function saveSimData() { localStorage.setItem('simData', JSON.stringify(simData)); }
+
+        function renderSimulator() {
+            document.getElementById('simBalance').textContent = simData.balance.toLocaleString('en-IN');
+            let portValue = simData.balance;
+            simData.positions.forEach(p => { portValue += p.price * p.qty; });
+            document.getElementById('simPortValue').textContent = '₹' + portValue.toLocaleString('en-IN');
+            const pnl = portValue - 1000000;
+            const pnlEl = document.getElementById('simPnL');
+            pnlEl.textContent = (pnl >= 0 ? '+' : '') + '₹' + pnl.toLocaleString('en-IN');
+            pnlEl.style.color = pnl >= 0 ? 'var(--success)' : 'var(--danger)';
+            document.getElementById('simPositions').innerHTML = simData.positions.map(p => {
+                const cp = getMockPrice(p.asset);
+                const pnl2 = p.type === 'buy' ? (cp - p.price) * p.qty : (p.price - cp) * p.qty;
+                return `<tr><td>${p.asset}</td><td>${p.qty}</td><td>₹${p.price}</td><td>${p.type.toUpperCase()}</td>
+              <td style="color:${pnl2>=0?'var(--success)':'var(--danger)'}">₹${pnl2.toFixed(0)}</td>
+              <td><button class="btn" style="padding:4px 8px;font-size:0.7rem;background:var(--danger)" onclick="closePosition(${p.id})">Close</button></td></tr>`;
+            }).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--subtext)">No open positions</td></tr>';
+        }
+
+        // ============ JOURNAL ============
+        let journalData = JSON.parse(localStorage.getItem('journalData') || '[]');
+
+        function addJournalTrade() {
+            const asset = document.getElementById('jAsset').value;
+            const entry = parseFloat(document.getElementById('jEntry').value);
+            const exit = parseFloat(document.getElementById('jExit').value);
+            const qty = parseInt(document.getElementById('jQty').value) || 1;
+            const notes = document.getElementById('jNotes').value;
+            if (!asset || !entry || !exit) return alert('Fill all fields');
+            const pnl = (exit - entry) * qty;
+            journalData.push({ asset, entry, exit, qty, pnl, notes, date: new Date().toLocaleDateString() });
+            localStorage.setItem('journalData', JSON.stringify(journalData));
+            renderJournal();
+            ['jAsset', 'jEntry', 'jExit', 'jQty', 'jNotes'].forEach(id => document.getElementById(id).value = '');
+        }
+
+        function renderJournal() {
+            const wins = journalData.filter(t => t.pnl > 0).length;
+            const total = journalData.length;
+            document.getElementById('jWinRate').textContent = total ? Math.round(wins / total * 100) + '%' : '0%';
+            document.getElementById('jTotal').textContent = total;
+            const profits = journalData.filter(t => t.pnl > 0);
+            const losses = journalData.filter(t => t.pnl < 0);
+            document.getElementById('jAvgProfit').textContent = profits.length ? '₹' + Math.round(profits.reduce((s, t) =>
+                s + t.pnl, 0) / profits.length) : '₹0';
+            document.getElementById('jAvgLoss').textContent = losses.length ? '₹' + Math.round(losses.reduce((s, t) => s +
+                t.pnl, 0) / losses.length) : '₹0';
+            document.getElementById('jHistory').innerHTML = journalData.slice().reverse().map(t => `
+            <tr><td>${t.asset}</td><td>₹${t.entry}</td><td>₹${t.exit}</td><td>${t.qty}</td>
+            <td style="color:${t.pnl>=0?'var(--success)':'var(--danger)'}">₹${t.pnl}</td><td>${t.notes||'-'}</td></tr>
+          `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--subtext)">No trades yet</td></tr>';
+        }
+
+        // ============ MARKET ============
+        const marketAssets = [
+            { name: 'NIFTY 50', price: 22500 },
+            { name: 'SENSEX', price: 74200 },
+            { name: 'BANKNIFTY', price: 48500 },
+            { name: 'GOLD', price: 6200 },
+            { name: 'SILVER', price: 75000 },
+            { name: 'CRUDE OIL', price: 6200 },
+            { name: 'BTC', price: 6200000 },
+            { name: 'ETH', price: 320000 }
+        ];
+
+        function updateMarketPrices() {
+            const grid = document.getElementById('marketPrices');
+            if (!grid) return;
+            grid.innerHTML = marketAssets.map(a => {
+                const change = (Math.random() - 0.5) * 2;
+                const newPrice = a.price + change;
+                a.price = newPrice;
+                const isUp = change >= 0;
+                return `<div class="card">
+              <div style="font-weight:700">${a.name}</div>
+              <div style="font-size:1.5rem;font-weight:800">₹${newPrice.toLocaleString('en-IN',{maximumFractionDigits:2})}</div>
+              <div class="${isUp?'price-up':'price-down'}">${isUp?'▲':'▼'} ${Math.abs(change).toFixed(2)}%</div>
+            </div>`;
+            }).join('');
+        }
+
+        // ============ ACADEMY ============
+        const modules = [
+            { title: 'What is Trading', level: 'beginner', progress: 0 },
+            { title: 'Market Basics', level: 'beginner', progress: 0 },
+            { title: 'Candlestick Patterns', level: 'beginner', progress: 0 },
+            { title: 'Technical Analysis 101', level: 'intermediate', progress: 0 },
+            { title: 'Indicators Mastery', level: 'intermediate', progress: 0 },
+            { title: 'Risk Management', level: 'intermediate', progress: 0 },
+            { title: 'Price Action Trading', level: 'advanced', progress: 0 },
+            { title: 'Smart Money Concepts', level: 'advanced', progress: 0 },
+            { title: 'Options Trading', level: 'advanced', progress: 0 },
+            { title: 'Futures Trading', level: 'advanced', progress: 0 },
+        ];
+
+        function filterAcademy(level) {
+            document.querySelectorAll('#academyTabs .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            const filtered = level === 'all' ? modules : modules.filter(m => m.level === level);
+            renderAcademy(filtered);
+        }
+
+        function renderAcademy(list) {
+            const grid = document.getElementById('academyModules');
+            grid.innerHTML = (list || modules).map((m, i) => `
+            <div class="feature-card" onclick="toggleModule(${i})">
+              <div class="feature-icon">${m.level==='beginner'?'🌱':m.level==='intermediate'?'🌿':'🌳'}</div>
+              <h3>${m.title}</h3>
+              <p style="text-transform:capitalize">${m.level}</p>
+              <div style="background:rgba(255,255,255,0.1);border-radius:10px;height:6px;margin-top:8px">
+                <div style="width:${m.progress}%;height:100%;background:var(--accent);border-radius:10px;transition:0.5s"></div>
+              </div>
+              <small style="color:var(--subtext)">${m.progress}% complete</small>
+            </div>`).join('');
+        }
+
+        function toggleModule(i) {
+            modules[i].progress = Math.min(100, modules[i].progress + 20);
+            renderAcademy();
+        }
+
+        // ============ AI MENTOR ============
+        const aiResponses = {
+            'technical': 'Technical analysis involves studying price charts, patterns, and indicators to predict future movements. Key tools: RSI, MACD, Moving Averages, and Support/Resistance levels.',
+            'risk': 'Risk management is crucial! Never risk more than 1-2% of your capital on a single trade. Always use stop-losses and maintain a minimum 1:2 risk-reward ratio.',
+            'psychology': 'Trading psychology is 80% of success. Control greed and fear. Stick to your plan. Journal every trade. Take breaks after losses.',
+            'strategy': 'A solid strategy includes: clear entry/exit rules, position sizing, risk management, and backtesting. Start with price action before adding indicators.',
+            'default': 'Great question! In trading, focus on: 1) Risk management 2) Consistent strategy 3) Emotional control 4) Continuous learning. Want more specific guidance?'
+        };
+
+        function sendChat() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            addChatMsg('user', msg);
+            input.value = '';
+            const resp = msg.toLowerCase().includes('technical') ? aiResponses.technical :
+                msg.toLowerCase().includes('risk') ? aiResponses.risk :
+                msg.toLowerCase().includes('psycholog') || msg.toLowerCase().includes('emotion') ? aiResponses
+                .psychology :
+                msg.toLowerCase().includes('strategy') ? aiResponses.strategy : aiResponses.default;
+            setTimeout(() => addChatMsg('bot', resp), 600);
+        }
+
+        function addChatMsg(type, text) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = 'chat-msg chat-' + type;
+            div.textContent = type === 'bot' ? '🤖 ' + text : '👤 ' + text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            saveChatHistory();
+        }
+
+        function saveChatHistory() {
+            const msgs = [];
+            document.querySelectorAll('#chatContainer .chat-msg').forEach(m => {
+                msgs.push({ type: m.classList.contains('chat-user') ? 'user' : 'bot', text: m.textContent
+                        .substring(2) });
+            });
+            localStorage.setItem('chatHistory', JSON.stringify(msgs));
+        }
+
+        function loadChatHistory() {
+            const container = document.getElementById('chatContainer');
+            container.innerHTML = '';
+            const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+            history.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'chat-msg chat-' + m.type;
+                div.textContent = (m.type === 'bot' ? '🤖 ' : '👤 ') + m.text;
+                container.appendChild(div);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // ============ PRICING ============
+        const plans = [
+            { name: 'Free', price: '₹0', features: ['Trading Basics', 'Market News', 'Watchlist', 'Community Access'],
+                featured: false },
+            { name: 'Basic', price: '₹999', features: ['Complete Beginner Course', 'Technical Analysis', 'Trade Journal',
+                    'Watchlists', 'Strategy Templates'
+                ], featured: false },
+            { name: 'Plus', price: '₹3,499', features: ['AI Trading Mentor', 'Advanced Strategies', 'Live Webinars',
+                    'Premium Community', 'Advanced Analytics'
+                ], featured: false },
+            { name: 'Premium', price: '₹9,999', features: ['Everything Included', 'Personal Mentorship', 'Portfolio Reviews',
+                    'Exclusive Research', 'VIP Support'
+                ], featured: true, badge: 'BEST VALUE' },
+        ];
+
+        function renderPricing() {
+            document.getElementById('pricingGrid').innerHTML = plans.map(p => `
+            <div class="pricing-card ${p.featured?'featured':''}">
+              ${p.badge?`<span class="badge">${p.badge}</span>`:''}
+              <h3>${p.name}</h3>
+              <div class="price">${p.price}<span style="font-size:0.9rem;color:var(--subtext)">/mo</span></div>
+              <ul>${p.features.map(f=>`<li>✓ ${f}</li>`).join('')}</ul>
+              <button class="btn ${p.featured?'btn-primary':'btn-outline'}" style="width:100%">Get Started</button>
+            </div>`).join('');
+        }
+
+        // ============ ADMIN ============
+        function adminLogin() {
+            const pass = document.getElementById('adminPass').value;
+            if (pass === 'AKSHAT@2026') {
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                document.getElementById('editStudents').value = '50,000+';
+            } else {
+                alert('Wrong password!');
+            }
+        }
+
+        function saveAdmin() {
+            alert('Settings saved! (Demo - LocalStorage updated)');
+            localStorage.setItem('adminStudents', document.getElementById('editStudents').value);
+        }
+
+        // ============ INIT ============
+        function init() {
+            createParticles();
+            renderFeatures();
+            renderPricing();
+            renderAcademy();
+            renderSimulator();
+            renderJournal();
+            setInterval(updateMarketPrices, 3000);
+            updateMarketPrices();
+        }
+
+        init();
+        console.log('🚀 Akshat Rakesh Trading Academy - Ready');
+        console.log('👨‍💼 Owner: Akshat Rakesh');
+        console.log('🔐 Admin Password: AKSHAT@2026');
+        console.log('📊 All features active - Simulator | Journal | Market | Academy | AI Mentor | Plans');
+    </script>
 </body>
 </html>
