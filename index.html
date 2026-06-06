@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Astrologer GPT · Vedic Insights</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 10%, #1a1a2e, #0f0f1a);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      margin: 0;
+    }
+
+    .glass {
+      background: rgba(20, 20, 35, 0.65);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 215, 150, 0.08);
+      width: 100%;
+      max-width: 600px;
+      padding: 1.8rem 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #f9d56e, #e6b450);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #b9b9d0;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+      padding-bottom: 0.8rem;
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: space-around;
+      margin-bottom: 2rem;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #d1d1e0;
+      padding: 0.7rem 0.9rem;
+      border-radius: 2.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+      cursor: pointer;
+      transition: 0.25s;
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .nav-btn.active {
+      background: rgba(249, 213, 110, 0.18);
+      border-color: #f9b84a;
+      color: #ffd966;
+      box-shadow: 0 0 15px rgba(249, 180, 74, 0.4);
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: #c2c2da;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.4px;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: rgba(10, 10, 22, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 1.5rem;
+      padding: 0.9rem 1.2rem;
+      color: #f0f0ff;
+      font-size: 0.95rem;
+      backdrop-filter: blur(5px);
+      transition: 0.2s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #e6b450;
+      box-shadow: 0 0 12px rgba(230, 180, 80, 0.5);
+    }
+
+    .btn-primary {
+      background: linear-gradient(145deg, #f9b84a, #d68c2c);
+      border: none;
+      color: #0a0a14;
+      font-weight: bold;
+      padding: 0.9rem 1.8rem;
+      border-radius: 3rem;
+      width: 100%;
+      font-size: 1rem;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(230, 180, 80, 0.3);
+      margin-top: 0.8rem;
+    }
+
+    .btn-primary:active { transform: scale(0.97); }
+
+    .result-box {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(14px);
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      margin-top: 1.8rem;
+      border: 1px solid rgba(255, 215, 150, 0.25);
+      color: #eaeaf5;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      max-height: 450px;
+      overflow-y: auto;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.7rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .icon-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ddd;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .hidden-panel {
+      display: none;
+      margin-top: 1.2rem;
+      padding: 1.2rem;
+      background: rgba(15, 15, 27, 0.8);
+      border-radius: 1.8rem;
+      border: 1px solid rgba(255, 200, 100, 0.4);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2e2e42;
+      color: #ffe5b4;
+      padding: 0.8rem 2rem;
+      border-radius: 3rem;
+      font-size: 0.9rem;
+      backdrop-filter: blur(20px);
+      border: 1px solid #f9b84a;
+      z-index: 999;
+    }
+
+    @media (max-width: 400px) {
+      .glass { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="glass" id="appContainer">
+  <h1>✨ Astrologer GPT</h1>
+  <div class="subtitle">Vedic wisdom · stars & code</div>
+
+  <!-- Navigation -->
+  <div class="nav-tabs">
+    <button class="nav-btn active" data-tab="home">🏠 Home</button>
+    <button class="nav-btn" data-tab="full">🌌 Full Reading</button>
+    <button class="nav-btn" data-tab="career">💼 Career</button>
+    <button class="nav-btn" data-tab="ask">🔮 Ask</button>
+    <button class="nav-btn" data-tab="settings">⚙️ API</button>
+  </div>
+
+  <!-- Dynamic sections -->
+  <div id="sectionHome">
+    <div class="input-group"><label>🌟 Name</label><input type="text" id="userName" placeholder="Vibhu" value="Vibhu"></div>
+    <div class="input-group"><label>📅 Date of Birth</label><input type="text" id="dob" placeholder="10/05/2008" value="10/05/2008"></div>
+    <div class="input-group"><label>⏰ Time of Birth</label><input type="text" id="tob" placeholder="02:30 PM" value="02:30 PM"></div>
+    <div class="input-group"><label>📍 Place of Birth</label><input type="text" id="pob" placeholder="Kanpur, India" value="Kanpur, India"></div>
+    <div class="input-group"><label>❓ Optional Question</label><textarea id="userQuestion" rows="2" placeholder="Will I become a successful programmer?"></textarea></div>
+    <button class="btn-primary" id="quickFullBtn">✨ Generate Quick Full Reading</button>
+  </div>
+
+  <div id="sectionFull" style="display: none;">
+    <p style="color:#ccc; font-size:0.9rem; margin-bottom:1rem;">Deep personality & life analysis</p>
+    <button class="btn-primary" id="fullReadingBtn">🔮 Full Astrology Reading</button>
+  </div>
+  <div id="sectionCareer" style="display: none;">
+    <p style="color:#ccc; font-size:0.9rem; margin-bottom:1rem;">Career potential & business insights</p>
+    <button class="btn-primary" id="careerReadingBtn">📈 Career Reading</button>
+  </div>
+  <div id="sectionAsk" style="display: none;">
+    <p style="color:#ccc; font-size:0.9rem; margin-bottom:1rem;">Ask any question to the stars</p>
+    <div class="input-group"><label>🔮 Your Question</label><textarea id="askQuestion" rows="2" placeholder="Will I travel abroad?"></textarea></div>
+    <button class="btn-primary" id="askAstrologerBtn">✨ Ask Astrologer</button>
+  </div>
+  <div id="sectionSettings" style="display: none;">
+    <p style="color:#ccc; margin-bottom:0.8rem;">🔐 Protected settings (password required)</p>
+    <input type="password" id="settingsPass" placeholder="Enter admin password" style="margin-bottom:1rem;">
+    <button class="btn-primary" id="unlockSettingsBtn" style="margin-bottom:1rem;">Unlock</button>
+    <div id="settingsPanel" class="hidden-panel">
+      <div class="input-group"><label>🔑 OpenRouter API Key</label><input type="password" id="openRouterKey" placeholder="sk-or-..."></div>
+      <div class="input-group"><label>🧠 Model (e.g. deepseek/deepseek-chat)</label><input type="text" id="modelAddress" placeholder="deepseek/deepseek-chat"></div>
+      <div class="input-group"><label>✨ Astrology API Key</label><input type="password" id="astroApiKey" placeholder="freeastrologyapi key"></div>
+      <button class="btn-primary" id="saveSettingsBtn">💾 Save & Close</button>
+    </div>
+  </div>
+
+  <!-- Result display -->
+  <div id="resultContainer" class="result-box" style="display: none;"></div>
+  <div class="actions" id="actionBar" style="display: none;">
+    <button class="icon-btn" id="copyBtn">📋 Copy</button>
+    <button class="icon-btn" id="downloadBtn">⬇️ TXT</button>
+    <button class="icon-btn" id="clearBtn">🗑️ Clear</button>
+  </div>
+  <div style="margin-top:1rem; text-align:center; opacity:0.7; font-size:0.75rem;">🔮 AI interprets only supplied data</div>
+</div>
+
+<script>
+  (function() {
+    // ---------- DOM elements ----------
+    const tabs = document.querySelectorAll('.nav-btn');
+    const sections = {
+      home: document.getElementById('sectionHome'),
+      full: document.getElementById('sectionFull'),
+      career: document.getElementById('sectionCareer'),
+      ask: document.getElementById('sectionAsk'),
+      settings: document.getElementById('sectionSettings')
+    };
+    const resultDiv = document.getElementById('resultContainer');
+    const actionBar = document.getElementById('actionBar');
+    
+    // Inputs
+    const userNameInp = document.getElementById('userName');
+    const dobInp = document.getElementById('dob');
+    const tobInp = document.getElementById('tob');
+    const pobInp = document.getElementById('pob');
+    const userQuestion = document.getElementById('userQuestion');
+    const askQuestion = document.getElementById('askQuestion');
+    
+    // Settings
+    const settingsPass = document.getElementById('settingsPass');
+    const unlockBtn = document.getElementById('unlockSettingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+    const openRouterKey = document.getElementById('openRouterKey');
+    const modelAddress = document.getElementById('modelAddress');
+    const astroApiKey = document.getElementById('astroApiKey');
+    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+
+    // State
+    let currentResultText = '';
+    const PASSWORD = 'astroadmin';
+
+    // ---------- localStorage helpers ----------
+    function loadSettings() {
+      return {
+        openRouterKey: localStorage.getItem('astrologer_openrouter_key') || '',
+        model: localStorage.getItem('astrologer_model') || 'deepseek/deepseek-chat',
+        astroKey: localStorage.getItem('astrologer_astro_key') || ''
+      };
+    }
+    function saveSettingsToStorage(ork, model, ak) {
+      localStorage.setItem('astrologer_openrouter_key', ork);
+      localStorage.setItem('astrologer_model', model);
+      localStorage.setItem('astrologer_astro_key', ak);
+    }
+    function applyStoredSettings() {
+      const s = loadSettings();
+      if(openRouterKey) openRouterKey.value = s.openRouterKey;
+      if(modelAddress) modelAddress.value = s.model;
+      if(astroApiKey) astroApiKey.value = s.astroKey;
+    }
+    applyStoredSettings();
+
+    function saveLastReading(text) {
+      localStorage.setItem('astrologer_last_reading', text);
+    }
+    function loadLastReading() {
+      return localStorage.getItem('astrologer_last_reading') || '';
+    }
+
+    // Toast
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2800);
+    }
+
+    // Tab switching
+    function switchTab(tabId) {
+      Object.keys(sections).forEach(k => sections[k].style.display = 'none');
+      if (sections[tabId]) sections[tabId].style.display = 'block';
+      tabs.forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.nav-btn[data-tab="${tabId}"]`)?.classList.add('active');
+    }
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tab = e.target.getAttribute('data-tab');
+        if(tab) switchTab(tab);
+      });
+    });
+
+    // Display result
+    function showResult(text) {
+      currentResultText = text;
+      resultDiv.style.display = 'block';
+      actionBar.style.display = 'flex';
+      resultDiv.textContent = text;
+      saveLastReading(text);
+    }
+
+    // Typing effect simulation (simple)
+    async function typeEffect(text, element) {
+      element.textContent = '';
+      for (let i = 0; i < text.length; i++) {
+        element.textContent += text.charAt(i);
+        await new Promise(r => setTimeout(r, 8));
+      }
+    }
+
+    // Build astrology prompt
+    function buildPrompt(astroData, question, readingType = 'general') {
+      return `You are an expert Vedic astrologer. Analyze the following astrology data only. Never invent planetary positions.
+Speak in simple, detailed language. Avoid fear-based predictions, never claim certainty.
+
+Astrology API Data:
+${astroData}
+
+User Question/Context: ${question || 'General life reading'}
+
+Provide:
+1. Summary
+2. Personality Analysis
+3. Strengths
+4. Weaknesses
+5. Career Potential
+6. Financial Potential
+7. Relationship Insights
+8. Life Guidance & Advice
+
+Only use the supplied astrology data.`;
+    }
+
+    // Fetch astrology data from freeastrologyapi
+    async function getAstrologyData() {
+      const astroKey = astroApiKey.value.trim() || loadSettings().astroKey;
+      if (!astroKey) throw new Error('Astrology API key missing.');
+      const name = userNameInp.value.trim() || 'User';
+      const dob = dobInp.value.trim();
+      const tob = tobInp.value.trim();
+      const pob = pobInp.value.trim();
+      if (!dob || !tob || !pob) throw new Error('Please fill DOB, time, place.');
+
+      const [month, day, year] = dob.split('/');
+      const formattedDate = `${day}/${month}/${year}`; 
+      
+      const params = new URLSearchParams({
+        name: name,
+        day: day,
+        month: month,
+        year: year,
+        hour: tob.includes('PM') ? (parseInt(tob) + 12).toString().replace('NaN','12') : tob.split(':')[0],
+        min: tob.split(':')[1]?.replace(/[^0-9]/g,'') || '0',
+        lat: '26.4499',  // approximate Kanpur, realistic placeholder
+        lon: '80.3319',
+        tzone: '5.5',
+        api_key: astroKey
+      });
+      
+      const url = `https://freeastrologyapi.com/v1/planets?${params.toString()}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Astrology API failed');
+      const data = await response.json();
+      return JSON.stringify(data, null, 2);
+    }
+
+    // Call OpenRouter
+    async function callOpenRouter(prompt) {
+      const key = openRouterKey.value.trim() || loadSettings().openRouterKey;
+      const model = modelAddress.value.trim() || loadSettings().model;
+      if (!key) throw new Error('OpenRouter API key missing.');
+      
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${key}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      if (!res.ok) throw new Error('OpenRouter error');
+      const json = await res.json();
+      return json.choices?.[0]?.message?.content || 'No response';
+    }
+
+    // Generic handler
+    async function handleReading(questionText, readingType = 'full') {
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = '🪐 Consulting the stars...';
+      actionBar.style.display = 'none';
+      try {
+        const astroData = await getAstrologyData();
+        const prompt = buildPrompt(astroData, questionText, readingType);
+        const aiResponse = await callOpenRouter(prompt);
+        await typeEffect(aiResponse, resultDiv);
+        showResult(aiResponse);
+      } catch (e) {
+        resultDiv.textContent = `❌ ${e.message}`;
+        showResult(resultDiv.textContent);
+      }
+    }
+
+    // Button events
+    document.getElementById('quickFullBtn')?.addEventListener('click', () => {
+      handleReading(userQuestion.value.trim() || 'General life reading', 'full');
+    });
+    document.getElementById('fullReadingBtn')?.addEventListener('click', () => {
+      handleReading(userQuestion.value.trim() || 'Full life analysis', 'full');
+    });
+    document.getElementById('careerReadingBtn')?.addEventListener('click', () => {
+      handleReading('Career, business, technology and leadership potential', 'career');
+    });
+    document.getElementById('askAstrologerBtn')?.addEventListener('click', () => {
+      const q = askQuestion.value.trim();
+      if (!q) return showToast('Enter a question');
+      handleReading(q, 'ask');
+    });
+
+    // Settings unlock
+    unlockBtn.addEventListener('click', () => {
+      if (settingsPass.value === PASSWORD) {
+        settingsPanel.style.display = 'block';
+        showToast('Access granted');
+      } else {
+        showToast('Wrong password');
+      }
+    });
+    saveSettingsBtn.addEventListener('click', () => {
+      saveSettingsToStorage(openRouterKey.value, modelAddress.value, astroApiKey.value);
+      settingsPanel.style.display = 'none';
+      settingsPass.value = '';
+      showToast('Settings saved');
+    });
+
+    // Copy / Download / Clear
+    document.getElementById('copyBtn')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(currentResultText).then(() => showToast('Copied!'));
+    });
+    document.getElementById('downloadBtn')?.addEventListener('click', () => {
+      const blob = new Blob([currentResultText], {type: 'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'astrology-reading.txt';
+      a.click();
+    });
+    document.getElementById('clearBtn')?.addEventListener('click', () => {
+      resultDiv.style.display = 'none';
+      actionBar.style.display = 'none';
+      currentResultText = '';
+      localStorage.removeItem('astrologer_last_reading');
+    });
+
+    // Restore last reading on load
+    window.addEventListener('load', () => {
+      const last = loadLastReading();
+      if (last) {
+        resultDiv.style.display = 'block';
+        actionBar.style.display = 'flex';
+        resultDiv.textContent = last;
+        currentResultText = last;
+      }
+    });
+
+    // Initial home tab
+    switchTab('home');
+  })();
+</script>
+</body>
+</html>
